@@ -1,0 +1,6 @@
+- name: Execute veda_ffmpeg role
+  hosts: all
+  become: True
+  gather_facts: True
+  roles:
+    - veda_ffmpeg
