@@ -160,6 +160,26 @@
     - "install"
     - "install:configuration"
 
+- name: add splunk_jenkins_app tar
+  copy:
+    src: splunk-app-for-jenkins_107.tgz
+    dest: "{{ splunk_home }}/splunk-app-for-jenkins_107.tgz"
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_user }}"
+    mode: 0600
+  tags:
+    - install
+    - install:configuration
+
+- name: install splunk_jenkins_app
+  unarchive:
+    copy: no
+    src: "{{ splunk_home }}/splunk-app-for-jenkins_107.tgz"
+    dest: "{{ splunk_home }}/etc/apps/"
+    mode: 0600
+    owner: "{{ splunk_user }}"
+    group: "{{ splunk_user }}"
+
 - name: restart splunk
   service:
     name: splunk
