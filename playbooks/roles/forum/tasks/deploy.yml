@@ -67,6 +67,16 @@
   become_user: "{{ forum_user }}"
   environment: "{{ forum_base_env }}"
   when: migrate_db is defined and migrate_db|lower == "yes"
+  ignore_errors: yes
+  register: migration_status
+  run_once: yes
+  tags:
+    - migrate
+    - migrate:db
+
+- name: Stop deployment if migration fails
+  fail: msg="Migrations failure"
+  when: migration_status.rc > 0
   tags:
     - migrate
     - migrate:db
@@ -78,6 +88,16 @@
   become_user: "{{ forum_user }}"
   environment: "{{ forum_base_env }}"
   when: migrate_db is defined and migrate_db|lower == "yes" and FORUM_REBUILD_INDEX|bool
+  ignore_errors: yes
+  register: migration_status
+  run_once: yes
+  tags:
+    - migrate
+    - migrate:db
+
+- name: Stop deployment if migration fails
+  fail: msg="Migrations failure"
+  when: migration_status.rc > 0
   tags:
     - migrate
     - migrate:db
