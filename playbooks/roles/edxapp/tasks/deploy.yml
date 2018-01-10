@@ -169,7 +169,7 @@
     chdir: "{{ edxapp_code_dir }}"
   become_user: "{{ edxapp_user }}"
   environment: "{{ edxapp_environment }}"
-  when: EDXAPP_SETTINGS == 'openstack_settings' and python_openstack_requirement_file.stat.exists
+  when: EDXAPP_SETTINGS == 'openstack' and python_openstack_requirement_file.stat.exists
   tags:
     - install
     - install:app-requirements
